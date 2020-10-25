@@ -1,6 +1,6 @@
 # Nspire Movie Player
 
-This is a movie player for the NSpire calculator. http://youtu.be/Yx0L7ce5hq4
+This is a movie player for the Ti NSpire CX calculator. http://youtu.be/Yx0L7ce5hq4
 
 ~~Precompiled binaries are available for download at http://www.omnimaga.org/index.php?topic=12855.0 ~~
 
@@ -22,6 +22,9 @@ I don't know about nPlayer, but a typical NMP movie file size is about ~2.86Mb p
 ~~Technically, this can also work with any image type supported by the stb_image.c file. This includes PNG images.~~
 Only works with JPEG now to avoid checking image type every frame
 
+
+
+##### (The following sections assume Linux as your OS)
 ## Compiling
 
 Clone this repo to some location on your computer. Alternatively, download an archive and extract it.
