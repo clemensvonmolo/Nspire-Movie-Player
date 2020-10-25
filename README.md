@@ -39,7 +39,7 @@ First you need the following installed on your host machine:
 * ffmpeg
 * A C compiler
 
-You can simply run ```make helper``` then you can use the ```./convert.sh``` script and it'll do everything for you.
+You can simply run ```make helper``` then you can use the ```./convert.sh``` script inside the videos directory and it'll do everything for you.
 
 Otherwise, if you enjoy more control over the ffmpeg options, make a folder for all your frames. Then compile the helper.c program and copy the executable into your folder.
 
