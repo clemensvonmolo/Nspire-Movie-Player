@@ -1,5 +1,7 @@
 #include <os.h>
 #include "inc.h"
+#include "jpeg.h"
+#include <string.h>
 
 static inline uint16_t convert_color_cx(uint8_t (*ptr)[3]) {
     uint8_t r,g,b, *colors = (uint8_t*)ptr;
@@ -38,35 +40,63 @@ static inline void write_to_buffer_grey(uint8_t *grey) {
     }
 }
 
-void process_next_frame(FILE*fp) {
+void process_next_frame(FILE*fp, frameinfo* Frameinfo) {
     if (!init) return;
-    uint32_t next_size = file_read_uint32(fp);
-    int x,y,n;
-    void* mem = malloc(next_size);
-    if (!mem) return;
-    fread(mem, 1, next_size, fp);
+    uint32_t next_size;
 
-    void *data = stbi_load_from_memory(mem, next_size, &x, &y, &n, is_cx ? COMP_PER_PIXEL_CX : COMP_PER_PIXEL_GREY);
+    // code for skipping to a certain point in the video
+    if (!Frameinfo->targetNotReached) {
+        next_size = file_read_uint32(fp);
+        Frameinfo->currentFrame++;
+    } else {
+        if (Frameinfo->currentFrame > Frameinfo->targetFrame) {
+            fseek(fp,movie_start_offset,SEEK_SET);
+            Frameinfo->currentFrame = 0;
+        }
+        while (Frameinfo->targetNotReached) {
+            if (feof(fp)) return;
+            next_size = file_read_uint32(fp);
+            Frameinfo->currentFrame++;
+            fseek(fp,next_size,SEEK_CUR);
+            if((Frameinfo->currentFrame)-(Frameinfo->targetFrame) == 0) {
+                Frameinfo->targetNotReached = 0;
+                next_size = file_read_uint32(fp);
+            }
+
+        }
+    }
+
+    int x = 320,y = 240;
+    static uint32_t readbuf_size = 0;
+
+    // reuse buffer if large enough, resize otherwise
+    if(!readbuf_size) {
+        Frameinfo->fileBuffer = malloc(next_size);
+        //printf("readbuf malloc\n");
+        if (!Frameinfo->fileBuffer) return;
+        readbuf_size = next_size;
+    } else if(readbuf_size < next_size) {
+        //printf("readbuf realloc\n");
+        Frameinfo->fileBuffer = realloc(Frameinfo->fileBuffer,next_size);
+        if (!Frameinfo->fileBuffer) return;
+        readbuf_size = next_size;
+    }
+
+    fread(Frameinfo->fileBuffer, 1, next_size, fp);
+
+    void *data = custom_jpeg_load(Frameinfo->fileBuffer, next_size);
     if (data) {
         unsigned i = x*y;
         void* ptr = data;
-        fbuffer_ptr = SCREEN_BASE_ADDRESS;
+        int pix = 0;
 
-        if (is_cx) {
-            while (i) {
-                write_to_buffer_cx(ptr);
-                ptr = ((char*)ptr) + COMP_PER_PIXEL_CX;
-                i--;
-            }
-        }else{
-            while (i) {
-                write_to_buffer_grey(ptr);
-                ptr = ((char*)ptr) + COMP_PER_PIXEL_GREY;
-                i--;
-            }
+        while (i) {
+            *(Frameinfo->framebuffer+(pix)) = convert_color_cx(ptr);
+            pix++;
+            ptr = ((char*)ptr) + COMP_PER_PIXEL_CX;
+            i--;
         }
+        lcd_blit(Frameinfo->framebuffer,Frameinfo->screenType);
 
-        stbi_image_free(data);
     }
-    free(mem);
 }
