@@ -41,7 +41,7 @@ $(EXE).tns: $(EXE).elf
 	rm $@.zehn
 
 helper:
-	$(HOSTCC) $(HOSTCFLAGS) $(HELPER) -o $(DISTDIR)/$(HELPEREXE)
+	$(HOSTCC) $(HOSTCFLAGS) $(HELPER) -o videos/$(HELPEREXE)
 
 clean:
 	rm -f *.o *.elf *.zehn
