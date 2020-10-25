@@ -4,4 +4,14 @@
 *.tns
 *.zehn
 ./dst
+./videos/vidtmp
+./videos/*.jpg
+./videos/*.jpeg
+./videos/*.JPG
+./videos/*.JPEG
+./videos/*.mp4
+./videos/*.MP4
+./videos/*.mov
+./videos/*.MOV
+./videos/*.nmp.tns
 rubbish/*
