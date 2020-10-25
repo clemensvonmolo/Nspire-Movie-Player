@@ -3,5 +3,5 @@
 *.o
 *.tns
 *.zehn
-./dst/moviecompile
+./dst
 rubbish/*
