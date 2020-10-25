@@ -4,6 +4,7 @@
 *.tns
 *.zehn
 ./dst
+./videos/moviecompile
 ./videos/vidtmp
 ./videos/*.jpg
 ./videos/*.jpeg

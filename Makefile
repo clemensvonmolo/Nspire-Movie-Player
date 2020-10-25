@@ -48,4 +48,4 @@ clean:
 	rm -f $(DISTDIR)/$(EXE).tns
 
 clean_helper:
-	rm -f $(DISTDIR)/$(HELPEREXE)
+	rm -f videos/$(HELPEREXE)
