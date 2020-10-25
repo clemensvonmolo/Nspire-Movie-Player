@@ -1,5 +1,8 @@
+#ifndef INC_H
+#define INC_H
 #define STBI_HEADER_FILE_ONLY
-#include "stb_image.c"
+#define is_cx true
+#include <os.h>
 
 /* File reading */
 inline uint32_t file_read_uint32(FILE*fp);
@@ -20,6 +23,9 @@ void tick_timer();
 
 /* Globals */
 extern int fps, init;
+extern uint8_t* loadJpegBuf;
 
 #define COMP_PER_PIXEL_CX 3
 #define COMP_PER_PIXEL_GREY 1
+
+#endif
