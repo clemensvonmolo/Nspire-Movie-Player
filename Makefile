@@ -1,34 +1,51 @@
 GCC = nspire-gcc
 LD = nspire-ld
+GENZEHN = genzehn
+
 LIBS = -lm
-GCCFLAGS = -O3 -Wall -W
-OBJCOPY := "$(shell which arm-elf-objcopy 2>/dev/null)"
-ifeq (${OBJCOPY},"")
-	OBJCOPY := arm-none-eabi-objcopy
-endif
-EXE = nspiremovieplayer.tns
-OBJS = stb_image.o main.o frame.o file.o timer.o config.o
+GCCFLAGS = -Wall -W -marm
+GCCFLAGS += -O3 -g0
+LDFLAGS =
+ZEHNFLAGS = --name "nspiremovieplayer"
+
+EXE = nspiremovieplayer
+OBJS = config.o timer.o file.o jpeg.o frame.o main.o
+DISTDIR = .
+vpath %.tns $(DISTDIR)
+vpath %.elf $(DISTDIR)
 
 HOSTCC = gcc
-HOSTCFLAGS =
+HOSTCFLAGS = -O2 -g0
 HELPER = helper.c
 HELPEREXE = moviecompile
 
-DISTDIR = .
 vpath %.tns $(DISTDIR)
 
-all: $(EXE)
+all: $(EXE).tns
+
+jpeg.o: jpeg.c jpeg.h
+	$(GCC) -Ofast -g0 -c $< -o $@
 
 %.o: %.c
-	$(GCC) $(GCCFLAGS) -c $<
+	$(GCC) $(GCCFLAGS) -c $< -o $@
 
-$(EXE): $(OBJS)
+
+$(EXE).elf: $(OBJS) jpeg.o
+	mkdir -p $(DISTDIR)
+	#$(LD) $^ -o $@ $(LDFLAGS) $(LIBS)
 	$(LD) $(LDFLAGS) $^ $(LIBS) -o $(@:.tns=.elf)
-	$(OBJCOPY) -O binary $(@:.tns=.elf) $@
+
+$(EXE).tns: $(EXE).elf
+	$(GENZEHN) --input $^ --output $@.zehn $(ZEHNFLAGS)
+	make-prg $@.zehn $@
+	rm $@.zehn
 
 helper:
 	$(HOSTCC) $(HOSTCFLAGS) $(HELPER) -o $(HELPEREXE)
 
 clean:
-	rm -f *.o *.elf
-	rm -f $(EXE) $(HELPEREXE)
+	rm -f *.o *.elf *.zehn
+	rm -f $(EXE) #$(HELPEREXE)
+
+clean_helper:
+	rm -f $(HELPEREXE)
