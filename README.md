@@ -2,11 +2,12 @@
 
 This is a movie player for the NSpire calculator. http://youtu.be/Yx0L7ce5hq4
 
-Precompiled binaries are available for download at http://www.omnimaga.org/index.php?topic=12855.0
+~~Precompiled binaries are available for download at http://www.omnimaga.org/index.php?topic=12855.0 ~~
+
 
 ## Status
 
-At the moment, this is working for the NSpire CX. Porting to the older models is underway (and should work but is untested)
+At the moment, this is working for the NSpire CX. ~~Porting to the older models is underway (and should work but is untested)~~
 
 Only a POC at the moment. More polish to come.
 
@@ -14,19 +15,20 @@ Only a POC at the moment. More polish to come.
 
 I haven't had a look since the start of 2011 at nPlayer but at that time, it looked like it couldn't run for more than a few seconds. The compression they used was run length encoding.
 
-This player uses a public domain jpeg decoder to decode each frame and relies on jpeg compression to keep file sizes low. This has a performance penalty on the calculator (it had trouble even running 15fps video natively) but significantly reduces the file size (especially for the CX where there's more pixel data).
+This player uses a public domain jpeg decoder to decode each frame and relies on jpeg compression to keep file sizes low. This has a performance penalty on the calculator (manages 9~10 fps) but significantly reduces the file size (especially for the CX where there's more pixel data).
 
 I don't know about nPlayer, but a typical NMP movie file size is about ~2.86Mb per minute at 15fps.
 
-Technically, this can also work with any image type supported by the stb_image.c file. This includes PNG images.
+~~Technically, this can also work with any image type supported by the stb_image.c file. This includes PNG images.~~
+Only works with JPEG now to avoid checking image type every frame
 
 ## Compiling
 
 Clone this repo to some location on your computer. Alternatively, download an archive and extract it.
 
-Make sure you have a working Ndless SDK. Go into the source code and change the movie filename.
-
-Change into the directory and run ```make``` and it should compile everything.
+1. Make sure you have a working Ndless SDK.
+2. Go into the source code directory
+3. Run ```make``` and it should compile everything.
 
 ## How to convert movies for this?
 
@@ -46,6 +48,6 @@ This will spit out a whole lot of files. When it finishes, run the moviecompile 
 
 Enjoy your movie.
 
-## Licence
+## License
 
-Licenced under GPLv3. See LICENSE.
+Licensed under GPLv3. See LICENSE.

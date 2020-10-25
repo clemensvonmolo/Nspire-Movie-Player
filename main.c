@@ -5,6 +5,7 @@ int fps = 0, init = 0;
 uint8_t* loadJpegBuf;
 //#define DEBUG // so the emulator doesn't crash when changing cpu speed
 
+// copied from some ndless file
 static void set_lcd_mode(unsigned int mode)
 {
     uint32_t control = *IO_LCD_CONTROL;
