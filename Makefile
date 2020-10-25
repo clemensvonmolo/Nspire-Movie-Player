@@ -10,7 +10,7 @@ ZEHNFLAGS = --name "nspiremovieplayer"
 
 EXE = nspiremovieplayer
 OBJS = config.o timer.o file.o jpeg.o frame.o main.o
-DISTDIR = .
+DISTDIR = ./dst
 vpath %.tns $(DISTDIR)
 vpath %.elf $(DISTDIR)
 
@@ -37,15 +37,15 @@ $(EXE).elf: $(OBJS) jpeg.o
 
 $(EXE).tns: $(EXE).elf
 	$(GENZEHN) --input $^ --output $@.zehn $(ZEHNFLAGS)
-	make-prg $@.zehn $@
+	make-prg $@.zehn $(DISTDIR)/$@
 	rm $@.zehn
 
 helper:
-	$(HOSTCC) $(HOSTCFLAGS) $(HELPER) -o $(HELPEREXE)
+	$(HOSTCC) $(HOSTCFLAGS) $(HELPER) -o $(DISTDIR)/$(HELPEREXE)
 
 clean:
 	rm -f *.o *.elf *.zehn
-	rm -f $(EXE) #$(HELPEREXE)
+	rm -f $(DISTDIR)/$(EXE).tns
 
 clean_helper:
-	rm -f $(HELPEREXE)
+	rm -f $(DISTDIR)/$(HELPEREXE)

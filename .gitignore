@@ -2,5 +2,6 @@
 *.elf
 *.o
 *.tns
-moviecompile
+*.zehn
+./dst/moviecompile
 rubbish/*
