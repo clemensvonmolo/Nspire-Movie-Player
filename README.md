@@ -2,14 +2,14 @@
 
 This is a movie player for the Ti NSpire CX calculator. http://youtu.be/Yx0L7ce5hq4
 
-~~Precompiled binaries are available for download at http://www.omnimaga.org/index.php?topic=12855.0 ~~
+~~Precompiled binaries are available for download at [the forum post](http://www.omnimaga.org/index.php?topic=12855.0)~~
 
 
 ## Status
 
-At the moment, this is working for the NSpire CX. ~~Porting to the older models is underway (and should work but is untested)~~
+At the moment, this is **only** working for the NSpire CX. ~~Porting to the older models is underway (and should work but is untested)~~
 
-Only a POC at the moment. More polish to come.
+Timing is not currently implemented, the calculator tries to play the video as fast as possible.
 
 ## What's the difference between this and nPlayer?
 
@@ -39,15 +39,15 @@ First you need the following installed on your host machine:
 * ffmpeg
 * A C compiler
 
-You can simply run ```make helper``` then you can use the ```./convert.sh``` script inside the videos directory and it'll do everything for you.
+You can simply run ```make helper``` then you can use the ```./convert.sh``` script inside the *videos directory* and it'll do everything for you. Choose a filename with the extension ```.nmp.tns```. For the FPS choose something between 8-11 (may vary) so the video plays back in real-time and not slow-motion.
 
-Otherwise, if you enjoy more control over the ffmpeg options, make a folder for all your frames. Then compile the helper.c program and copy the executable into your folder.
+Otherwise, if you enjoy more control over the ffmpeg options, make a folder for all your frames. Then compile the *helper.c* program and copy the executable into your folder.
 
 Change into your directory and run the following command on the command line:
 
     ffmpeg -i /path/to/movie -s qvga -an -r 15 frame-%05d.jpg
 
-This will spit out a whole lot of files. When it finishes, run the moviecompile program and it will produce a file. Copy this to your calculator along with the main program and run it. Make sure the extension ends in .nmp.tns.
+This will spit out a whole lot of files. When it finishes, run the moviecompile program and it will produce a file. Copy this to your calculator along with the main program and run it.
 
 Enjoy your movie.
 
