@@ -4,7 +4,7 @@
 static int swap = 0;
 long int movie_start_offset = 0;
 
-inline uint32_t file_read_uint32(FILE*fp) {
+uint32_t file_read_uint32(FILE*fp) {
     uint32_t ret;
     fread(&ret, 4, 1, fp);
     if (swap) __bswap32(ret);
