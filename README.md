@@ -2,7 +2,7 @@
 
 This is a movie player for the Ti NSpire CX calculator. http://youtu.be/Yx0L7ce5hq4
 
-~~Precompiled binaries are available for download at [the forum post](http://www.omnimaga.org/index.php?topic=12855.0)~~
+Precompiled binaries are available for download at the Github Releases Tab
 
 
 ## Status
@@ -24,14 +24,32 @@ Only works with JPEG now to avoid checking image type every frame
 
 
 
+
 ##### (The following sections assume Linux as your OS)
 ## Compiling
 
 Clone this repo to some location on your computer. Alternatively, download an archive and extract it.
 
 1. Make sure you have a working Ndless SDK.
-2. Go into the source code directory
-3. Run ```make``` and it should compile everything.
+1. Go into the source code directory
+1. Run ```make``` and it should compile everything.
+
+
+## Installation
+
+1. Acquire binaries by either compiling or downloading them from the releases tab
+1. Make sure you have Ndless installed on your calculator
+    - get it [here](https://github.com/ndless-nspire/Ndless/releases/latest/) if you don't have it yet
+1. Copy the nspiremovieplayer.tns file to your calculator using either the official linking program or TILP
+1. Run nspiremovieplayer.tns on your calculator once to register the .nmp file extension
+
+After following these steps you can simply open a .nmp video file using the file explorer on your calculator.
+
+
+## Controls
+
+Press ```Esc``` on the calculator to exit the movie player.\
+Pressing the ```S``` key while a video is playing will open a popup-window which displays the current timestamp of the video in seconds and allows you to jump to another timestamp (also in seconds).
 
 ## How to convert movies for this?
 
